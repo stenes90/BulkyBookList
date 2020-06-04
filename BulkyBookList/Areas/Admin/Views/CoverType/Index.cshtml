@@ -1,0 +1,42 @@
+﻿@model BulkyBook.Models.CoverType
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+
+<form method="post">
+    <div class="row">
+        <div class="col-6">
+            <h2>Cover Types</h2>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-primary float-right">Add Cover Type</button>
+        </div>
+    </div>
+
+
+    <div class="border p-4">
+        <table class="table table-striped" id="tblData">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    
+</form>
+
+@section scripts
+{
+<script src="~/js/coverType.js"></script>
+}
+
+
+
+
+

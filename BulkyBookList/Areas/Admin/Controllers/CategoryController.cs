@@ -38,14 +38,45 @@ namespace BulkyBook.Areas.Admin.Controllers
             return View(categoryInDb);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (category.Id != 0)
+                {
+                    _unitOfWork.Category.Update(category);
+                }
+                else
+                {
+                    _unitOfWork.Category.Add(category);
+                }
+                _unitOfWork.Save();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(category);
+        }
+
 
 
         #region API CALLS
 
+        [HttpGet]
         public IActionResult GetAll()
         {
             var allObj = _unitOfWork.Category.GetAll();
             return Json(new { data = allObj });
+        }
+
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            var objInDb = _unitOfWork.Category.Get(id);
+            _unitOfWork.Category.Remove(objInDb);
+            _unitOfWork.Save();
         }
 
 

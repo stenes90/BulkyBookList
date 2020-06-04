@@ -6,9 +6,9 @@ $(document).ready(function () {
 
 
 function loadDataTable(){
-    $("#tblData").dataTable({
+    dataTable = $("#tblData").dataTable({
         "ajax": {
-            "url": "/Admin/Category/GetAll"
+            "url": "/Admin/CoverType/GetAll"
         },
             "columns": [
                 { "data": "name" },
@@ -20,7 +20,7 @@ function loadDataTable(){
                                     <a href="/admin/category/upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="/admin/category/upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                    <a onclick=Delete("${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
@@ -32,3 +32,16 @@ function loadDataTable(){
         }
     );
 }
+
+function Delete(id) {
+    if (confirm("Are you sure you want to delete the category?")) {
+        $.ajax({
+            url: "/admin/category/Delete/" + id,
+            method: "DELETE",
+            success: function () {
+                dataTable.api().ajax.reload();
+            }
+        })
+    }
+}
+
